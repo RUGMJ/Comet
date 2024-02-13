@@ -7,9 +7,8 @@ INSTALL_TARGET_PROCESSES = Preferences
 PACKAGE_VERSION = 1.0.5
 
 # Rootless / Rootful settings
-ifeq ($(ROOTLESS),1)
+ifeq ($(THEOS_PACKAGE_SCHEME),roothide)
 	Comet_XCODEFLAGS = SWIFT_ACTIVE_COMPILATION_CONDITIONS="ROOTLESS"
-	THEOS_PACKAGE_SCHEME = rootless
 	COMET_INSTALL_PATH = /var/jb/Library/Frameworks
 	MOVE_TO_THEOS_PATH = $(THEOS)/lib/iphone/rootless/
 	# Control
@@ -38,7 +37,7 @@ before-package::
 		-e 's/\$${PKG_NAME_SUFFIX}/$(PKG_NAME_SUFFIX)/g' \
 		$(THEOS_STAGING_DIR)/DEBIAN/control$(ECHO_END)
 	
-ifeq ($(ROOTLESS),1)
+ifeq ($(THEOS_PACKAGE_SCHEME),roothide)
 	# Move to staging dir
 	$(ECHO_NOTHING)mkdir -p $(THEOS_STAGING_DIR)$(COMET_INSTALL_PATH)$(ECHO_END)
 	$(ECHO_NOTHING)mv $(THEOS_OBJ_DIR)/Comet.framework/ $(THEOS_STAGING_DIR)$(COMET_INSTALL_PATH)$(ECHO_END)
