@@ -1,4 +1,4 @@
-name: Builf
+name: Build
 
 on:
   push:
@@ -31,6 +31,7 @@ jobs:
       - name: Build package
         run: |
           brew install make ldid
+          mkdir -p theos/lib/iphone/rootless
           THEOS=theos make clean package THEOS_PACKAGE_SCHEME=roothide
 
       - name: Upload a Build Artifact
