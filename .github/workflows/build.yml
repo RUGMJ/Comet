@@ -1,0 +1,39 @@
+name: Builf
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+    
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@main
+
+      - name: Checkout roothide/theos
+        uses: actions/checkout@main
+        with:
+          repository: roothide/theos
+          ref: master
+          submodules: recursive
+          path: theos
+
+      - name: Checkout theos/sdks
+        uses: actions/checkout@main
+        with:
+          repository: theos/sdks
+          ref: master
+          sparse-checkout: iPhoneOS16.5.sdk
+          path: theos/sdks
+
+      - name: Build package
+        run: |
+          brew install make ldid
+          THEOS=theos make clean package THEOS_PACKAGE_SCHEME=roothide
+
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          path: theos/lib/iphone/rootless/*
