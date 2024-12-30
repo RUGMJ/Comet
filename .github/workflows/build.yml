@@ -35,6 +35,6 @@ jobs:
           THEOS=theos make clean package THEOS_PACKAGE_SCHEME=rootless
 
       - name: Upload a Build Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           path: theos/lib/iphone/rootless/*
