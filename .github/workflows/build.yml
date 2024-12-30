@@ -12,10 +12,10 @@ jobs:
     steps:
       - uses: actions/checkout@main
 
-      - name: Checkout roothide/theos
+      - name: Checkout theos/theos
         uses: actions/checkout@main
         with:
-          repository: roothide/theos
+          repository: theos/theos
           ref: master
           submodules: recursive
           path: theos
@@ -32,7 +32,7 @@ jobs:
         run: |
           brew install make ldid
           mkdir -p theos/lib/iphone/rootless
-          THEOS=theos make clean package THEOS_PACKAGE_SCHEME=roothide
+          THEOS=theos make clean package THEOS_PACKAGE_SCHEME=rootless
 
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3
